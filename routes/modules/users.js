@@ -5,23 +5,23 @@ const router = express.Router()
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
-router.get('/users/login', (req, res) => {
+router.get('/login', (req, res) => {
   res.render('login')
 })
 
 router.post(
-  '/users/login',
+  '/login',
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/users/login'
   })
 )
 
-router.get('/users/register', (req, res) => {
+router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/users/register', (req, res) => {
+router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
   const errors = []
 
@@ -66,13 +66,13 @@ router.post('/users/register', (req, res) => {
   })
 })
 
-router.get('/users/logout', (req, res) => {
+router.get('/logout', (req, res) => {
   req.logout(function (err) {
     if (err) {
       return next(err)
     }
     req.flash('success_msg', '你已經成功登出。')
-    res.redirect('/users/login')
+    res.redirect('/login')
   })
 })
 
