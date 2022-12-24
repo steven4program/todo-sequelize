@@ -13,7 +13,16 @@ const db = require('./models')
 const { Todo, User } = db
 
 app.get('/', (req, res) => {
-  res.send('hello world')
+  return Todo.findAll({
+    raw: true,
+    nest: true
+  })
+    .then((todos) => {
+      return res.render('index', { todos: todos })
+    })
+    .catch((error) => {
+      return res.status(422).json(error)
+    })
 })
 app.get('/users/login', (req, res) => {
   res.render('login')
